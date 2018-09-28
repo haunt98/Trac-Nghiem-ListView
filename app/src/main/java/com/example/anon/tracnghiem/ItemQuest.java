@@ -4,14 +4,16 @@ class ItemQuest {
     private String quest;
     private String[] answers;
     private int idImage;
+    private int idFinalDapAn;
 
-    public ItemQuest(String que, String[] ans, int ima) {
+    public ItemQuest(String que, String[] ans, int ima, int da) {
         quest = que;
         answers = new String[ans.length];
         for (int i = 0; i < ans.length; ++i) {
             answers[i] = ans[i];
         }
         idImage = ima;
+        idFinalDapAn = da;
     }
 
     public String getQuest() {
@@ -28,5 +30,9 @@ class ItemQuest {
 
     public int getIdImage() {
         return idImage;
+    }
+
+    public int getIdFinalDapAn() {
+        return idFinalDapAn;
     }
 }

@@ -44,8 +44,16 @@ public class MainActivity extends AppCompatActivity {
                 R.drawable.kakashi
         };
 
+        int[] list_da = {
+                R.id.dapAn2,
+                R.id.dapAn1,
+                R.id.dapAn0,
+                R.id.dapAn3
+        };
+
         for (int i = 0; i < 4; ++i) {
-            ItemQuest itemQuest = new ItemQuest(list_que[i], ans, list_img[i]);
+            ItemQuest itemQuest = new ItemQuest(list_que[i], ans,
+                    list_img[i], list_da[i]);
             itemQuestArrayList.add(itemQuest);
         }
     }
