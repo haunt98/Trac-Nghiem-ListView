@@ -28,19 +28,31 @@ public class TracNghiemAdapter extends ArrayAdapter<ItemQuest> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final ItemQuest itemQuest = itemArray.get(position);
+        final ViewHolderQuest viewHolderQuest;
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(layoutId,
                     parent, false);
+            viewHolderQuest = new ViewHolderQuest();
+            viewHolderQuest.setDeBai((TextView) convertView.findViewById(R.id.deBai));
+            viewHolderQuest.setAnhDapAn((ImageView) convertView.findViewById(R.id.anhDapAn));
+            viewHolderQuest.setNhieuDapAn((RadioGroup) convertView.findViewById(R.id.nhieuDapAn));
+            viewHolderQuest.setDapAn0((RadioButton) convertView.findViewById(R.id.dapAn0));
+            viewHolderQuest.setDapAn1((RadioButton) convertView.findViewById(R.id.dapAn1));
+            viewHolderQuest.setDapAn2((RadioButton) convertView.findViewById(R.id.dapAn2));
+            viewHolderQuest.setDapAn3((RadioButton) convertView.findViewById(R.id.dapAn3));
+            viewHolderQuest.setCheckDapAnDung((Button) convertView.findViewById(R.id
+                    .checkDapAnDung));
+            convertView.setTag(viewHolderQuest);
+        } else {
+            viewHolderQuest = (ViewHolderQuest) convertView.getTag();
         }
 
-        // anh
-        ImageView imageView = convertView.findViewById(R.id.anhDapAn);
-        imageView.setImageResource(itemQuest.getIdImage());
-
         // de bai
-        TextView tvDeBai = convertView.findViewById(R.id.deBai);
-        tvDeBai.setText(itemQuest.getQuest());
+        viewHolderQuest.getDeBai().setText(itemQuest.getQuest());
+
+        // anh
+        viewHolderQuest.getAnhDapAn().setImageResource(itemQuest.getIdImage());
 
         // cau hoi
         String[] ans = itemQuest.getAnswers();
@@ -48,23 +60,20 @@ public class TracNghiemAdapter extends ArrayAdapter<ItemQuest> {
             Log.d("DEBUG", "Khong du 4 dap an");
             return convertView;
         }
-        RadioButton radioButton_0 = convertView.findViewById(R.id.dapAn0);
-        radioButton_0.setText(ans[0]);
-        RadioButton radioButton_1 = convertView.findViewById(R.id.dapAn1);
-        radioButton_1.setText(ans[1]);
-        RadioButton radioButton_2 = convertView.findViewById(R.id.dapAn2);
-        radioButton_2.setText(ans[2]);
-        RadioButton radioButton_3 = convertView.findViewById(R.id.dapAn3);
-        radioButton_3.setText(ans[3]);
+        viewHolderQuest.getDapAn0().setText(ans[0]);
+        viewHolderQuest.getDapAn1().setText(ans[1]);
+        viewHolderQuest.getDapAn2().setText(ans[2]);
+        viewHolderQuest.getDapAn3().setText(ans[3]);
 
         // check cau tra loi
-        Button butCheckDapAn = convertView.findViewById(R.id.dapAnDung);
+        Button butCheckDapAnDung = viewHolderQuest.getCheckDapAnDung();
         final View finalConvertView = convertView;
-        butCheckDapAn.setOnClickListener(new View.OnClickListener() {
+        butCheckDapAnDung.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RadioGroup rgroup = finalConvertView.findViewById(R.id.nhieuDapAn);
-                int chosenDapAn = rgroup.getCheckedRadioButtonId();
+                //RadioGroup rgroup = finalConvertView.findViewById(R.id.nhieuDapAn);
+                RadioGroup radioGroup = viewHolderQuest.getNhieuDapAn();
+                int chosenDapAn = radioGroup.getCheckedRadioButtonId();
                 if (chosenDapAn >= 0) {
                     if (chosenDapAn == itemQuest.getIdFinalDapAn()) {
                         Toast.makeText(finalConvertView.getContext(),
